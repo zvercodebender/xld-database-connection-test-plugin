@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+-->
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+<type-modification type="sql.OracleClient">
+    <property name="checkScript" default="sql/checkOracleDB" hidden="true"/>
+    <property name="testSql" kind="string" default="SELECT * FROM v\$version;" hidden="true" />
+    <method name="check"/>
+</type-modification>
+<type-modification type="sql.MySqlClient">
+    <property name="checkScript" default="sql/checkMySqlDB" hidden="true"/>
+    <property name="testSql" kind="string" default="SHOW VARIABLES LIKE \&quot;%version%\&quot;;" hidden="true" />
+    <method name="check"/>
+</type-modification>
+<type-modification type="sql.MsSqlClient">
+    <property name="checkScript" default="sql/checkMsSqlDB" hidden="true"/>
+    <property name="testSql" kind="string" default="SELECT @@VERSION AS 'SQL Server Version';" hidden="true" />
+    <method name="check"/>
+</type-modification>
+
+</synthetic>
