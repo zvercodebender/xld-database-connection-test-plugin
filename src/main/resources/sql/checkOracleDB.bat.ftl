@@ -24,12 +24,12 @@ echo 'ERROR: password not specified! Specify it in either SqlScripts or its Orac
 endlocal
 exit /B 1
 <#else>
+echo WHENEVER SQLERROR EXIT 1 ROLLBACK; > wrapper.sql
+echo WHENEVER OSERROR EXIT 2 ROLLBACK; >> wrapper.sql
+echo ${container.testSql} >> wrapper.sql
 
-echo EXIT | "${container.oraHome}\bin\sqlplus" ${cmn.lookup('additionalOptions')!} -L ${cmn.lookup('username')}/${cmn.lookup('password')}@${container.sid}  <<END_OF_WRAPPER
-WHENEVER SQLERROR EXIT 1 ROLLBACK;
-WHENEVER OSERROR EXIT 2 ROLLBACK;
-${container.testSql}
-END_OF_WRAPPER
+echo EXIT | "${container.oraHome}\bin\sqlplus" ${cmn.lookup('additionalOptions')!} -L ${cmn.lookup('username')}/${cmn.lookup('password')}@${container.sid} @ wrapper.sql 
+del wrapper.sql
 
 set RES=%ERRORLEVEL%
 if not %RES% == 0 (
